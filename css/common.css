@@ -1,0 +1,110 @@
+:root {
+    --teal: #2ec1ac;
+    --teal_hover: #25A593;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.h-font {
+    font-family: 'Merienda', cursive;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.custom-alert {
+    position: fixed;
+    top: 80px;
+    right: 25px;
+    z-index: 1111;
+}
+
+.custom-bg {
+    background-color: var(--teal);
+    border: 1px solid var(--teal);
+}
+
+.custom-bg:hover {
+    background-color: var(--teal_hover);
+    border-color: var(--teal_hover);
+}
+
+.h-line {
+    width: 150px;
+    height: 1.7px;
+    margin: 0 auto;
+}
+
+/* Navbar */
+
+#dashboard-menu .nav-item .nav-link {
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#dashboard-menu .nav-item .nav-link:hover {
+    background-color: #ccc;
+}
+
+#dashboard-menu .nav-item .nav-link.active {
+    background-color: #78dd92;
+}
+
+#dashboard-menu .nav-item .nav-link.dropdown-toggle.active {
+    background-color: transparent;
+    color: #000;
+}
+
+#dashboard-menu .dropdown-menu .dropdown-item {
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#dashboard-menu .dropdown-menu .dropdown-item:hover {
+    background-color: #ccc;
+}
+
+#dashboard-menu .dropdown-menu .dropdown-item.active {
+    background-color: #78dd92;
+}
+
+/* Sidebar */
+.sidebar .nav-item .nav-link {
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-item .nav-link:hover {
+    background-color: #ccc;
+}
+
+.sidebar .nav-item .nav-link.active {
+    background-color: #78dd92;
+}
+
+.sidebar .dropdown-menu .dropdown-item {
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .dropdown-menu .dropdown-item:hover {
+    background-color: #ccc;
+}
+
+.sidebar .dropdown-menu .dropdown-item.active {
+    background-color: #78dd92;
+}
