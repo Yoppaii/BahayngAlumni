@@ -15,7 +15,7 @@ if (isset($_POST['get_bookings'])) {
     $query = "SELECT bo.*, bd.* FROM booking_order bo
     INNER JOIN booking_details bd ON bo.booking_id = bd.booking_id
     WHERE (bo.order_id LIKE ? OR bd.phone_number LIKE ? OR bd.user_name LIKE ?) 
-    AND bo.booking_status = ? AND bo.refund = ? ORDER BY bo.booking_id ASC";
+    AND bo.booking_status = ? AND bo.refund = ? ORDER BY bo.booking_id DESC";
 
     $res = select($query, ["%$frm_data[search]%", "%$frm_data[search]%", "%$frm_data[search]%", "cancelled", 0], 'ssssi');
     $i = 1;

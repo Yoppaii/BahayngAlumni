@@ -15,9 +15,9 @@ if (isset($_POST['get_bookings'])) {
     $query = "SELECT bo.*, bd.* FROM booking_order bo
     INNER JOIN booking_details bd ON bo.booking_id = bd.booking_id
     WHERE (bo.order_id LIKE ? OR bd.phone_number LIKE ? OR bd.user_name LIKE ?) 
-    AND bo.booking_status = ? AND bo.arrival = ? ORDER BY bo.booking_id ASC";
+    AND bo.booking_status = ? AND bo.arrival = ? ORDER BY bo.booking_id DESC";
 
-    $res = select($query, ["%$frm_data[search]%", "%$frm_data[search]%", "%$frm_data[search]%", "booked", 0], 'ssssi');
+    $res = select($query, ["%$frm_data[search]%", "%$frm_data[search]%", "%$frm_data[search]%", "pending", 0], 'ssssi');
     $i = 1;
     $new_booking_data = "";
 
@@ -80,15 +80,14 @@ if (isset($_POST['assign_room'])) {
 
     $query = "UPDATE booking_order bo INNER JOIN booking_details bd
         ON bo.booking_id = bd.booking_id
-        SET bo.arrival = ?, bd.room_no = ?
+        SET  bo.booking_status = ?,bo.arrival = ?, bo.rate_review = ? ,bd.room_no = ?
         WHERE bo.booking_id = ?";
 
-    $values = [1, $frm_data['room_no'], $frm_data['booking_id']];
-    $res = update($query, $values, 'isi');
+    $values = ['booked', 1, 0, $frm_data['room_no'], $frm_data['booking_id']];
+    $res = update($query, $values, 'siisi');
 
     echo ($res == 2) ? 1 : 0;
 }
-
 
 if (isset($_POST['cancel_booking'])) {
     $frm_data = filteration($_POST);

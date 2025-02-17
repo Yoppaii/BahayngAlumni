@@ -12,7 +12,7 @@ if (isset($_POST['get_bookings'])) {
 
     $frm_data = filteration($_POST);
 
-    $limit = 2;
+    $limit = 5;
     $page = $frm_data['page'];
     $start = ($page - 1) * $limit;
 

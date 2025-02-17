@@ -34,7 +34,7 @@ if (isset($_POST['get_users'])) {
         } else {
 
             $verified = "<span class='badge bg-success'><i class='bi bi-check-lg'></></span>";
-            $delete_btn = "<span class='badge bg-warning'><i class='bi bi-shield-check'></i></span>";
+            $delete_btn = "<span class='badge bg-success'><i class='bi bi-shield-check'></i></span>";
         }
 
         $date = date("Y-m-d", strtotime($row['dateandtime']));
@@ -117,7 +117,7 @@ if (isset($_POST['search_user'])) {
         } else {
 
             $verified = "<span class='badge bg-success'><i class='bi bi-check-lg'></></span>";
-            $delete_btn = "<span class='badge bg-warning'><i class='bi bi-shield-check'></i></span>";
+            $delete_btn = "<span class='badge bg-success'><i class='bi bi-shield-check'></i></span>";
         }
 
         $date = date("Y-m-d", strtotime($row['dateandtime']));
