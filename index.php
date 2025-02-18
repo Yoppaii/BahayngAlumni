@@ -162,6 +162,30 @@
                     $book_btn = "<button onclick='checkLoginToBook($login,$room_data[id])' class='btn btn-sm text-white custom-bg shadow-none'>Book Now</button>";
                 }
 
+                // room rating
+
+                $rating_q = "SELECT AVG(rating) AS avg_rating FROM rating_review
+                    WHERE room_id = $room_data[id] ORDER BY sr_no DESC LIMIT 20";
+
+                $rating_res = mysqli_query($con, $rating_q);
+                $rating_fetch = mysqli_fetch_assoc($rating_res);
+
+                $rating_avg = "";
+                $rating_avg = round($rating_fetch['avg_rating']);
+                $rating_data = "";
+
+                if ($rating_avg != NULL) {
+                    for ($i = 0; $i <=  $rating_avg; $i++) {
+                        $rating_data .= "<i class='bi bi-star-fill text-warning'></i> ";
+                    }
+                    for ($i = $rating_avg; $i < 5; $i++) {
+                        $rating_data .= "<i class='bi bi-star text-warning'></i> ";
+                    }
+                }
+
+
+
+                // print room card
 
                 echo <<<data
                 
@@ -176,7 +200,6 @@
                             <div class="features mb-4">
                                 <h6 class="mb-1">features</h6>
                                 $features_data
-
                             </div>
 
                             <div class="facilities mb-4">
@@ -192,16 +215,11 @@
                                     <span class="badge rounded-pill bg-light text-dark text-wrap">
                                         $room_data[children] Children
                                     </span>
-                                </div>
+                            </div>
                             <div class="rating mb-4">
                                 <h6 class="mb-1">Rating</h6>
-                                <!-- Display 5 stars -->
-                                <span>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
+                                <span> 
+                                $rating_data
                                 </span>
                             </div>
 
@@ -263,105 +281,47 @@
         <div class="swiper swiper-testimonials">
             <div class="swiper-wrapper mb-5">
 
-                <div class="swiper-slide bg-white p-4">
-                    <div class="profile d-flex align-items-center mb-3">
-                        <img src="" width="30px">
-                        <h6 class="m-0 ms-2">Random User</h6>
-                    </div>
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum assumenda voluptatibus dolor
-                        amet
-                        nulla atque culpa ex? Error, nihil adipisci!
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-half text-warning"></i>
-                        </span>
-                    </div>
-                </div>
+                <?php
 
-                <div class="swiper-slide bg-white p-4">
-                    <div class="profile d-flex align-items-center mb-3">
-                        <img src="" width="30px">
-                        <h6 class="m-0 ms-2">Random User</h6>
-                    </div>
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum assumenda voluptatibus dolor
-                        amet
-                        nulla atque culpa ex? Error, nihil adipisci!
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-half text-warning"></i>
-                        </span>
-                    </div>
-                </div>
+                $review_q = "SELECT rr.*, uc.name AS username, uc.profile, r.name AS roomname FROM rating_review rr 
+                    INNER JOIN user_credentials uc ON rr.user_id = uc.id
+                    INNER JOIN rooms r ON rr.room_id = r.id
+                    ORDER BY sr_no DESC LIMIT 10";
 
-                <div class="swiper-slide bg-white p-4">
-                    <div class="profile d-flex align-items-center mb-3">
-                        <img src="" width="30px">
-                        <h6 class="m-0 ms-2">Random User</h6>
-                    </div>
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum assumenda voluptatibus dolor
-                        amet
-                        nulla atque culpa ex? Error, nihil adipisci!
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-half text-warning"></i>
-                        </span>
-                    </div>
-                </div>
+                $review_res = mysqli_query($con, $review_q);
 
-                <div class="swiper-slide bg-white p-4">
-                    <div class="profile d-flex align-items-center mb-3">
-                        <img src="" width="30px">
-                        <h6 class="m-0 ms-2">Random User</h6>
-                    </div>
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum assumenda voluptatibus dolor
-                        amet
-                        nulla atque culpa ex? Error, nihil adipisci!
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-half text-warning"></i>
-                        </span>
-                    </div>
-                </div>
+                $img_path = USERS_IMG_PATH;
 
-                <div class="swiper-slide bg-white p-4">
-                    <div class="profile d-flex align-items-center mb-3">
-                        <img src="" width="30px">
-                        <h6 class="m-0 ms-2">Random User</h6>
-                    </div>
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum assumenda voluptatibus dolor
-                        amet
-                        nulla atque culpa ex? Error, nihil adipisci!
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-half text-warning"></i>
-                        </span>
-                    </div>
-                </div>
+                if (mysqli_num_rows($review_res) == 0) {
+                    echo 'No reviews yet!';
+                } else {
+                    while ($row = mysqli_fetch_assoc($review_res)) {
+                        $stars = "<i class='bi bi-star-fill text-warning'></i>";
+
+                        for ($i = 1; $i < $row['rating']; $i++) {
+                            $stars .= "<i class='bi bi-star-fill text-warning'></i>";
+                        }
+                        echo <<<slides
+                        <div class="swiper-slide bg-white p-4">
+                            <div class="profile d-flex align-items-center mb-3">
+                                <img src="$img_path$row[profile]" loading='lazy' width="30px" class='rounded-circle me-1'>
+                                <h6 class="m-0 ms-2">$row[username]</h6>
+                                <h6 class="m-0 ms-2">$row[roomname]</h6>
+                            </div>
+                            <p>
+                                $row[review];
+                            </p>
+                            <div class="rating">
+                                $stars
+                            </div>
+                        </div>
+                        slides;
+                    }
+                }
+
+                ?>
+
+
 
             </div>
             <div class="swiper-pagination"></div>
@@ -519,6 +479,10 @@
             slidesPerView: "auto",
             slidesPerView: "3",
             loop: true,
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
             coverflowEffect: {
                 rotate: 50,
                 stretch: 0,

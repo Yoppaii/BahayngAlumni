@@ -43,52 +43,6 @@
                     </li>
                 </ul>
             </div>
-            <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="dashboard-menu">
-                <li class="nav-item">
-                    <a class="nav-link me-2" href="index.php">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle me-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Rooms & Facilities
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownRooms">
-                        <li><a class="dropdown-item" href="rooms.php">Rooms</a></li>
-                        <li><a class="dropdown-item" href="facilities.php">Facilities</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle me-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        News & Events
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownNews">
-                        <li><a class="dropdown-item" href="news.php">News and Features</a></li>
-                        <li><a class="dropdown-item" href="events.php">Events</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle me-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Alumni
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownAlumni">
-                        <li><a class="dropdown-item" href="alumni_tracer.php">Alumni Tracer</a></li>
-                        <li><a class="dropdown-item" href="careers.php">Careers</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle me-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        About
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownAbout">
-                        <li><a class="dropdown-item" href="about.php">About Us</a></li>
-                        <li><a class="dropdown-item" href="campus_satellites.php">Campus Satellites</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link me-2" href="contact_us.php">Contact Us</a>
-                </li>
-            </ul> -->
-
-            <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"> <li class="nav-item"> <a class="nav-link me-2" href="index.php">Home</a> </li> <li class="nav-item"> <a class="nav-link me-2" href="rooms.php">Rooms</a> </li> <li class="nav-item"> <a class="nav-link me-2" href="facilities.php">Facilities</a> </li> <li class="nav-item"> <a class="nav-link me-2" href="contact_us.php">Contact Us</a> </li> <li class="nav-item"> <a class="nav-link me-2" href="about.php">About</a> </li> </ul> -->
             <div class="d-flex ms-auto">
                 <?php
                 if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
@@ -129,12 +83,123 @@
                 }
 
                 ?>
+                <br>
+
 
 
             </div>
         </div>
     </div>
 </nav>
+
+<!-- <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php">
+            <?php echo htmlspecialchars($site_r['site_title']); ?>
+        </a>
+
+        <ul class="navbar-nav mx-auto" id="dashboard-menu">
+            <?php
+            $menuItems = [
+                'Home' => 'index.php',
+                'Rooms' => 'rooms.php',
+                'Facilities' => 'facilities.php',
+                'News' => 'news.php',
+                'Events' => 'events.php',
+                'Alumni Tracer' => 'alumni_tracer.php',
+                'Careers' => 'careers.php',
+                'Campus' => 'campus_satellites.php',
+                'About Us' => 'about.php',
+                'Contact Us' => 'contact_us.php'
+            ];
+            foreach ($menuItems as $label => $link): ?>
+                <li class="nav-item"><a class="nav-link me-1" href="<?php echo $link; ?>"><?php echo $label; ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+
+        <div class="d-flex">
+            <?php if (!empty($_SESSION['login'])): ?>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">
+                        <img src="<?php echo USERS_IMG_PATH . htmlspecialchars($_SESSION['userProfile']); ?>" class="rounded-circle" width="30" height="30">
+                        <?php echo htmlspecialchars($_SESSION['userName']); ?>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <?php foreach (
+                            [
+                                'Profile' => 'profile.php',
+                                'Settings' => 'settings.php',
+                                'Bookings' => 'bookings.php',
+                                'Logout' => 'logout.php'
+                            ] as $label => $link
+                        ): ?>
+                            <li><a class="dropdown-item" href="<?php echo $link; ?>"><?php echo $label; ?></a></li>
+                            <?php if ($label === 'Settings') echo '<li><hr class="dropdown-divider"></li>'; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php else: ?>
+                <button class="btn btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav> -->
+
+<!-- Responsive Navbar with Dashboard Menu Underneath-->
+<!-- <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand fw-bold fs-4" href="index.php">
+            <?php echo htmlspecialchars($site_r['site_title']); ?>
+        </a>
+
+        <div class="d-flex">
+            <?php if (!empty($_SESSION['login'])): ?>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">
+                        <img src="<?php echo USERS_IMG_PATH . htmlspecialchars($_SESSION['userProfile']); ?>" class="rounded-circle" width="30" height="30">
+                        <?php echo htmlspecialchars($_SESSION['userName']); ?>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <?php foreach (['Profile' => 'profile.php', 'Settings' => 'settings.php', 'Bookings' => 'bookings.php', 'Logout' => 'logout.php'] as $label => $link): ?>
+                            <li><a class="dropdown-item" href="<?php echo $link; ?>"><?php echo $label; ?></a></li>
+                            <?php if ($label === 'Settings') echo '<li><hr class="dropdown-divider"></li>'; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php else: ?>
+                <button class="btn btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav> -->
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <ul class="navbar-nav w-100 d-flex justify-content-center py-2" id="dashboard-menu">
+            <?php foreach (
+                [
+                    'Home' => 'index.php',
+                    'Rooms' => 'rooms.php',
+                    'Facilities' => 'facilities.php',
+                    'News' => 'news.php',
+                    'Events' => 'events.php',
+                    'Alumni Tracer' => 'alumni_tracer.php',
+                    'Careers' => 'careers.php',
+                    'Campus' => 'campus_satellites.php',
+                    'About Us' => 'about.php',
+                    'Contact Us' => 'contact_us.php'
+                ] as $label => $link
+            ): ?>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="<?php echo $link; ?>"><?php echo $label; ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</nav> -->
+
 
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
