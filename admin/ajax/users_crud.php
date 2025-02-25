@@ -44,7 +44,7 @@ if (isset($_POST['get_users'])) {
         <tr class='align-middle'>
             <td>$i</td>
             <td>
-            <img src='$path$row[profile]' width='55px'>
+            <img src='$path$row[profile]' loading='lazy' class='rounded-circle' width='55px' height='50px'>
             </td>
             <td>$row[name]</td>
             <td>$row[email]</td>

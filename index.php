@@ -55,36 +55,18 @@
 
     <!-- Check Availability Form -->
     <div class="container availability-form">
-        <div class="row">
-            <div class="col-lg-12 bg-white shadow p-4 rounded">
-                <h5>Check Booking Availability</h5>
-                <form>
+        <div class="row justify-content-center">
+            <div class="col-lg-11 bg-white shadow p-4 rounded">
+                <h5 class="mb-3 text-center">Check Booking Availability</h5>
+                <form action="rooms.php">
                     <div class="row align-items-end">
-                        <div class="col-lg-3 mb-3">
+                        <div class="col-lg-5 mb-3">
                             <label class="form-label" style="font-weight: 500">Check-in</label>
-                            <input type="date" class="form-control shadown-none">
+                            <input type="date" class="form-control shadown-none" required>
                         </div>
-                        <div class="col-lg-3 mb-3">
-                            <label class="form-label" style="font-weight: 500">Check-in</label>
-                            <input type="date" class="form-control shadown-none">
-                        </div>
-                        <div class="col-lg-3 mb-3">
-                            <label class="form-label" style="font-weight: 500">Adult</label>
-                            <select class="form-select shadown-none">
-                                <option selected>Open this select </option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3 mb-3">
-                            <label class="form-label" style="font-weight: 500">Children</label>
-                            <select class="form-select shadown-none">
-                                <option selected>Open this select </option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                        <div class="col-lg-5 mb-3">
+                            <label class="form-label" style="font-weight: 500">Check-out</label>
+                            <input type="date" class="form-control shadown-none" required>
                         </div>
                         <div class="col-lg-1 mb-lg-3 mt-2">
                             <button type="submit" class="btn text-white shadown-none custom-bg">Submit</button>
@@ -94,6 +76,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Our Rooms -->
     <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR ROOMS</h2>
@@ -175,7 +158,7 @@
                 $rating_data = "";
 
                 if ($rating_avg != NULL) {
-                    for ($i = 0; $i <=  $rating_avg; $i++) {
+                    for ($i = 0; $i <  $rating_avg; $i++) {
                         $rating_data .= "<i class='bi bi-star-fill text-warning'></i> ";
                     }
                     for ($i = $rating_avg; $i < 5; $i++) {
@@ -208,13 +191,10 @@
                             </div>
 
                             <div class="capacity mb-4">
-                                    <h6 class="mb-1">Capacity</h6>
-                                    <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                        $room_data[adult] Adults
-                                    </span>
-                                    <span class="badge rounded-pill bg-light text-dark text-wrap">
-                                        $room_data[children] Children
-                                    </span>
+                            <h6 class='mb-1'>Max Capacity</h6>
+                            <span class='badge rounded-pill bg-light text-dark text-wrap'>
+                                $room_data[capacity] Guests
+                            </span>
                             </div>
                             <div class="rating mb-4">
                                 <h6 class="mb-1">Rating</h6>

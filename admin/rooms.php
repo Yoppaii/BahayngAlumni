@@ -139,14 +139,13 @@ if (isset($_GET['delete'])) {
 
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Adult(Max.)</label>
-                                <input type="text" min="1" name="adult" class="form-control shadown-none" required>
-
+                                <label class="form-label fw-bold">Capacity(Max.)</label>
+                                <input type="text" min="1" name="capacity" class="form-control shadown-none" required>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <!-- <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Children(Max.)</label>
                                 <input type="text" min="1" name="children" class="form-control shadown-none" required>
-                            </div>
+                            </div> -->
 
                             <div class="col-12 mb-3">
                                 <label class="form-label fw-bold">Features</label>
@@ -236,14 +235,14 @@ if (isset($_GET['delete'])) {
 
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Adult(Max.)</label>
-                                <input type="text" min="1" name="adult" class="form-control shadown-none" required>
+                                <label class="form-label fw-bold">Capacity(Max.)</label>
+                                <input type="text" min="1" name="capacity" class="form-control shadown-none" required>
 
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <!-- <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Children(Max.)</label>
                                 <input type="text" min="1" name="children" class="form-control shadown-none" required>
-                            </div>
+                            </div> -->
                             <div class="col-12 mb-3">
                                 <label class="form-label fw-bold">Features</label>
                                 <div class="row">

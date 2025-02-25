@@ -15,8 +15,8 @@ if (isset($_POST['add_room'])) {
     $frm_data = filteration($_POST);
     $flag = 0;
 
-    $query1 = "INSERT INTO rooms( name, area, price, quantity, adult, children, description) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $values = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['quantity'], $frm_data['adult'], $frm_data['children'], $frm_data['description']];
+    $query1 = "INSERT INTO rooms( name, area, price, quantity, capacity, description) VALUES (?, ?, ?, ?, ?, ?)";
+    $values = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['quantity'], $frm_data['capacity'], $frm_data['description']];
 
     if (insert($query1, $values, 'siiiiis')) {
         $flag = 1;
@@ -81,11 +81,8 @@ if (isset($_POST['get_all_rooms'])) {
             <td>$row[area] sq. ft.</td>
             <td>
                 <span class='badge rounded-pill bg-light text-dark'>
-                    Adult: $row[adult]
+                    Max Capacity: $row[capacity]
                 </span><br>
-                <span class='badge rounded-pill bg-light text-dark'>
-                    Children: $row[children]
-                </span>
             </td>
             <td>₱$row[price]</td>
             <td>$row[quantity]</td>
@@ -145,10 +142,10 @@ if (isset($_POST['edit_room'])) {
     $frm_data = filteration($_POST);
     $flag = 0;
 
-    $query1 = "UPDATE rooms SET name=?, area=?, price=?, quantity=?, adult=?, children=?, description=? WHERE id=?";
-    $values = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['quantity'], $frm_data['adult'], $frm_data['children'], $frm_data['description'], $frm_data['room_id']];
+    $query1 = "UPDATE rooms SET name=?, area=?, price=?, quantity=?, capacity=?, description=? WHERE id=?";
+    $values = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['quantity'], $frm_data['capacity'], $frm_data['description'], $frm_data['room_id']];
 
-    if (update($query1, $values, 'siiiiisi')) {
+    if (update($query1, $values, 'siiiisi')) {
         $flag = 1;
     }
 

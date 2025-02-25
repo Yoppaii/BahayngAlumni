@@ -12,8 +12,7 @@ function add_room() {
     data.append('area', add_room_form.elements['area'].value);
     data.append('price', add_room_form.elements['price'].value);
     data.append('quantity', add_room_form.elements['quantity'].value);
-    data.append('adult', add_room_form.elements['adult'].value);
-    data.append('children', add_room_form.elements['children'].value);
+    data.append('capacity', add_room_form.elements['capacity'].value);
     data.append('description', add_room_form.elements['description'].value);
 
     let features = [];
@@ -84,8 +83,7 @@ function edit_room() {
     data.append('area', edit_room_form.elements['area'].value);
     data.append('price', edit_room_form.elements['price'].value);
     data.append('quantity', edit_room_form.elements['quantity'].value);
-    data.append('adult', edit_room_form.elements['adult'].value);
-    data.append('children', edit_room_form.elements['children'].value);
+    data.append('capacity', edit_room_form.elements['capacity'].value);
     data.append('description', edit_room_form.elements['description'].value);
 
     let features = [];
@@ -140,8 +138,7 @@ function edit_details(id) {
         edit_room_form.elements['area'].value = data.roomData.area;
         edit_room_form.elements['price'].value = data.roomData.price;
         edit_room_form.elements['quantity'].value = data.roomData.quantity;
-        edit_room_form.elements['adult'].value = data.roomData.adult;
-        edit_room_form.elements['children'].value = data.roomData.children;
+        edit_room_form.elements['capacity'].value = data.roomData.capacity;
         edit_room_form.elements['description'].value = data.roomData.description;
 
         edit_room_form.elements['features'].forEach(el => {

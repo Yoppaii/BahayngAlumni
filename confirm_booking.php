@@ -13,6 +13,13 @@
             transform: scale(1.05);
             transition: all 0.3s;
         }
+
+        .booked {
+            background-color: red !important;
+            color: white !important;
+            pointer-events: none;
+            /* Prevent selection */
+        }
     </style>
 </head>
 
@@ -114,7 +121,6 @@
             <div class="col-lg-5 col-md-12 px-4">
                 <div class="card mb-4 border-0 shadow rounded-3">
                     <div class="card-body">
-
                         <form action="pay_now.php" id="booking_form" method="POST">
                             <h6 class="mb-3">Booking Details</h6>
                             <div class="row">
@@ -132,11 +138,11 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Check-in</label>
-                                    <input name="checkin" onchange="check_availability()" type="date" class="form-control shadown-none" required>
+                                    <input name="checkin" id="checkin" onchange="check_availability()" type="date" class="form-control shadown-none" required>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label">Check-out</label>
-                                    <input name="checkout" onchange="check_availability()" type="date" class="form-control shadown-none" required>
+                                    <input name="checkout" id="checkout" onchange="check_availability()" type="date" class="form-control shadown-none" required>
                                 </div>
                                 <div class="col-12">
                                     <div class="spinner-border text-info mb-3 d-none" id="info_loader" role="status">
@@ -161,6 +167,29 @@
 
 
     <?php require 'inc/footer.php'; ?>
+
+    <!-- <script>
+        function fetchBookedDates() {
+            let formData = new FormData();
+            formData.append("fetch_booked_dates", true);
+
+            fetch("fetch_booked_dates.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Booked Dates Response:", data); // Debugging output
+
+                    if (data.status === "success") {
+                        initializeFlatpickr(data.booked_dates);
+                    } else {
+                        console.error("Error: Invalid response format");
+                    }
+                })
+                .catch(error => console.error("Error fetching booked dates:", error));
+        }
+    </script> -->
 
     <script>
         let booking_form = document.getElementById('booking_form');
@@ -214,8 +243,6 @@
                 xhr.send(data);
 
             }
-
-
         }
     </script>
 
