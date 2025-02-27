@@ -60,14 +60,29 @@
                 <h5 class="mb-3 text-center">Check Booking Availability</h5>
                 <form action="rooms.php">
                     <div class="row align-items-end">
-                        <div class="col-lg-5 mb-3">
+                        <div class="col-lg-4 mb-3">
                             <label class="form-label" style="font-weight: 500">Check-in</label>
-                            <input type="date" class="form-control shadown-none" required>
+                            <input type="date" class="form-control shadown-none" name="checkin" required>
                         </div>
-                        <div class="col-lg-5 mb-3">
+                        <div class="col-lg-4 mb-3">
                             <label class="form-label" style="font-weight: 500">Check-out</label>
-                            <input type="date" class="form-control shadown-none" required>
+                            <input type="date" class="form-control shadown-none" name="checkout" required>
                         </div>
+                        <div class="col-lg-3 mb-3">
+                            <label class="form-label" style="font-weight: 500">Capacity</label>
+                            <select class="form-select shadow-none" name="capacity">
+                                <?php
+                                $guests_q = mysqli_query($con, "SELECT DISTINCT capacity AS max_capacity FROM rooms 
+                                WHERE status=1 AND removed=0 
+                                ORDER BY capacity ASC");
+
+                                while ($guest_res = mysqli_fetch_assoc($guests_q)) {
+                                    echo "<option value='{$guest_res['max_capacity']}'>{$guest_res['max_capacity']}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <input type="hidden" name="check_availability">
                         <div class="col-lg-1 mb-lg-3 mt-2">
                             <button type="submit" class="btn text-white shadown-none custom-bg">Submit</button>
                         </div>

@@ -40,6 +40,7 @@ if (isset($_GET['fetch_rooms'])) {
     $capacity = ($guests['capacity'] != '') ? $guests['capacity'] : 0;
     // $capacity = (!empty($guests->capacity)) ? $guests->capacity : 0;
 
+    // print_r($_GET['check_availability']);
 
     // counter number of rooms
 
@@ -130,7 +131,7 @@ if (isset($_GET['fetch_rooms'])) {
                     <div class='col-md-5 d-flex justify-content-center align-items-center mb-3 mb-md-0'>
                         <img src='$room_thumb' style='height:250px;' class='img-fluid rounded' alt='...'>
                     </div>
-                    <div class='col-md-5 px-lg-3 px-md-3 px-0 text-start'>
+                    <div class='col-md-4 px-lg-3 px-md-3 px-0 text-start'>
                         <h5 class='mb-3'>$room_data[name]</h5>
                         <div class='features mb-3'>
                             <h6 class='mb-1'>features</h6>
@@ -148,7 +149,7 @@ if (isset($_GET['fetch_rooms'])) {
                         </span>
                     </div>
                     </div>
-                    <div class='col-md-2 mt-lg-0 mt-md-0 mt-3 text-align-center text-center'>
+                    <div class='col-md-3 mt-lg-0 mt-md-0 mt-3 text-align-center text-center'>
                         <h6 class='mb-3'>₱$room_data[price] / night</h6>
                         $book_btn
                         <a href='room_details.php?id=$room_data[id]' class='btn btn-sm w-100 btn-outline-dark shadow-none'> More Details</a>

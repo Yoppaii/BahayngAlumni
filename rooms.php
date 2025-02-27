@@ -18,7 +18,23 @@
 
 <body class="bg-light">
 
-    <?php require 'inc/header.php'; ?>
+    <?php
+    require 'inc/header.php';
+
+    $checkin_default = "";
+    $checkout_default = "";
+    $capacity_default = 1;
+
+
+    if (isset($_GET['check_availability'])) {
+        $frm_data = filteration($_GET);
+
+        $checkin_default = $frm_data['checkin'];
+        $checkout_default = $frm_data['checkout'];
+
+        $capacity_default = $frm_data['capacity'];
+    }
+    ?>
 
 
     <div class="my-5 px-4">
@@ -30,8 +46,7 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row">
-
+        <div class="row justify-content-center">
             <div class="col-lg-3 col-md-12 mb-lg-0 mb-4 px-4">
                 <nav class="navbar navbar-expand-lg navbar-light bg-white rounded shadow">
                     <div class="container-fluid flex-lg-column align-items-stretch">
@@ -47,26 +62,10 @@
                                     <button id="check_availability_btn" class="btn btn-sm text-secondary shadow-none d-none" onclick="check_availability_clear()">Reset</button>
                                 </h5>
                                 <label class="form-label" style="font-weight: 500">Check-in</label>
-                                <input type="date" class="form-control shadown-none mb-3" id="checkin" onchange="check_availability_filter()">
+                                <input type="date" class="form-control shadown-none mb-3" id="checkin" value=<?php echo $checkin_default ?> onchange="check_availability_filter()">
                                 <label class="form-label" style="font-weight: 500">Check-out</label>
-                                <input type="date" class="form-control shadown-none" id="checkout" onchange="check_availability_filter()">
+                                <input type="date" class="form-control shadown-none" id="checkout" value=<?php echo $checkout_default ?> onchange="check_availability_filter()">
                             </div>
-                            <!-- <div class="border bg-light p-3 rounded mb-3">
-                                <h5 class="mb-3" style="font-size: 18px;">FACILITIES</h5>
-                                <div class="mb-2">
-                                    <input type="checkbox" id="f1" class="form-check-input shadown-none me-1">
-                                    <label class="form-check-label" for="f1">Facility one</label>
-                                </div>
-                                <div class="mb-2">
-                                    <input type="checkbox" id="f2" class="form-check-input shadown-none me-1">
-                                    <label class="form-check-label" for="f2">Facility two</label>
-                                </div>
-                                <div class="mb-2">
-                                    <input type="checkbox" id="f3" class="form-check-input shadown-none me-1">
-                                    <label class="form-check-label" for="f3">Facility three</label>
-                                </div>
-                            </div> -->
-                            <!-- Guests -->
                             <div class="border bg-light p-3 rounded mb-3">
                                 <h5 class="d-flex align-items-center justify-content-between mb-3" style="font-size: 18px;">
                                     <span>Guests</span>
@@ -77,7 +76,7 @@
                                     <label class="form-label" for="capacity">Capacity</label>
                                     <div class="input-group">
                                         <button class="btn btn-outline-secondary" type="button" onclick="decreaseCapacity()">&#x2212;</button>
-                                        <input type="number" min="1" id="capacity" oninput="guests_filter()" class="form-control shadow-none text-center">
+                                        <input type="number" min="1" id="capacity" value=<?php echo $capacity_default ?> oninput="guests_filter()" class="form-control shadow-none text-center">
                                         <button class="btn btn-outline-secondary" type="button" onclick="increaseCapacity()">&#x2b;</button>
                                     </div>
                                 </div>
@@ -87,8 +86,7 @@
                 </nav>
             </div>
 
-            <div class="col-lg-9 col-md-12 px-4" id="rooms_data">
-
+            <div class="col-lg-7 col-md-12 px-4" id="rooms_data">
             </div>
 
         </div>
@@ -159,10 +157,6 @@
             fetch_rooms();
         }
 
-        fetch_rooms();
-    </script>
-
-    <script>
         function increaseCapacity() {
             let input = document.getElementById('capacity');
             input.stepUp();
@@ -176,6 +170,8 @@
                 guests_filter();
             }
         }
+
+        fetch_rooms();
     </script>
 
     <?php require 'inc/footer.php'; ?>
