@@ -17,7 +17,7 @@ if (isset($_POST['get_bookings'])) {
     WHERE (bo.order_id LIKE ? OR bd.phone_number LIKE ? OR bd.user_name LIKE ?) 
     AND bo.booking_status = ? AND bo.arrival = ? ORDER BY bo.booking_id DESC";
 
-    $res = select($query, ["%$frm_data[search]%", "%$frm_data[search]%", "%$frm_data[search]%", "pending", 0], 'ssssi');
+    $res = select($query, ["%$frm_data[search]%", "%$frm_data[search]%", "%$frm_data[search]%", "booked", 0], 'ssssi');
     $i = 1;
     $new_booking_data = "";
 

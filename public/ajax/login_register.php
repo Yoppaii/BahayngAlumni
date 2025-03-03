@@ -1,7 +1,9 @@
 <?php
 
-require '../admin/inc/db_config.php';
-require '../admin/inc/essentials.php';
+define('ROOT_DIR', 'E:/xampp/htdocs/RoomReservation/');
+
+require ROOT_DIR . 'admin/inc/db_config.php';
+require ROOT_DIR . 'admin/inc/essentials.php';
 require '../inc/sendgrid/sendgrid-php.php';
 
 date_default_timezone_set("Asia/Manila");

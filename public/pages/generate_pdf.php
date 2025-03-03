@@ -1,8 +1,8 @@
 <?php
 
-require 'admin/inc/db_config.php';
-require 'admin/inc/essentials.php';
-require 'admin/inc/mpdf/vendor/autoload.php';
+require __DIR__ . '/../../admin/inc/db_config.php';
+require __DIR__ . '/../../admin/inc/essentials.php';
+require __DIR__ . '/../../admin/inc/mpdf/vendor/autoload.php';
 
 session_start();
 

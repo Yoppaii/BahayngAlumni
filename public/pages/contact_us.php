@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <?php require 'inc/links.php'; ?>
+    <?php require '../inc/links.php'; ?>
     <title><?php echo $site_r['site_title'] ?> - Contact Us</title>
     <style>
         .pop:hover {
@@ -18,7 +18,7 @@
 
 <body class="bg-light">
 
-    <?php require 'inc/header.php';
+    <?php require '../inc/header.php';
 
     $contact_q = "SELECT * FROM contact_settings WHERE sr_no=?";
     $values = [1];
@@ -123,7 +123,7 @@
 
 
 
-    <?php require 'inc/footer.php'; ?>
+    <?php require '../inc/footer.php'; ?>
 
 </body>
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <?php require 'inc/links.php'; ?>
+    <?php require '../inc/links.php'; ?>
     <title><?php echo $site_r['site_title'] ?> - Rooms</title>
     <style>
         .pop:hover {
@@ -19,7 +19,7 @@
 <body class="bg-light">
 
     <?php
-    require 'inc/header.php';
+    require '../inc/header.php';
 
     $checkin_default = "";
     $checkout_default = "";
@@ -113,7 +113,7 @@
             });
 
             let xhr = new XMLHttpRequest();
-            xhr.open("POST", "public/ajax/rooms.php?fetch_rooms&check_availability=" + check_availability + "&guests=" + guests, true);
+            xhr.open("POST", "../ajax/rooms.php?fetch_rooms&check_availability=" + check_availability + "&guests=" + guests, true);
 
             xhr.onprogress = function() {
                 rooms_data.innerHTML = '<div class="spinner-border text-info mb-3 d-block mx-auto " id="loader" role="status">' +
@@ -174,7 +174,7 @@
         fetch_rooms();
     </script>
 
-    <?php require 'inc/footer.php'; ?>
+    <?php require '../inc/footer.php'; ?>
 
 
 </body>

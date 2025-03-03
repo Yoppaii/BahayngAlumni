@@ -5,7 +5,7 @@
 <link
     href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&family=Poppins:wght@400;500;600&display=swap"
     rel="stylesheet">
-<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -17,8 +17,8 @@ session_start();
 date_default_timezone_set("Asia/Manila");
 
 
-require('admin/inc/db_config.php');
-require('admin/inc/essentials.php');
+require(__DIR__ . '/../../admin/inc/db_config.php');
+require(__DIR__ . '/../../admin/inc/essentials.php');
 
 
 $site_q = "SELECT * FROM site_settings WHERE sr_no=?";

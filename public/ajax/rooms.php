@@ -38,7 +38,6 @@ if (isset($_GET['fetch_rooms'])) {
     // guests data decode
     $guests = json_decode($_GET['guests'], true);
     $capacity = ($guests['capacity'] != '') ? $guests['capacity'] : 0;
-    // $capacity = (!empty($guests->capacity)) ? $guests->capacity : 0;
 
     // print_r($_GET['check_availability']);
 

@@ -1,7 +1,7 @@
 <?php
-require 'paymongo/config.php';
-require 'admin/inc/db_config.php';
-require 'admin/inc/essentials.php';
+require '../inc/paymongo/config.php';
+require __DIR__ . '/../../admin/inc/db_config.php';
+require __DIR__ . '/../../admin/inc/essentials.php';
 
 
 date_default_timezone_set("Asia/Manila");

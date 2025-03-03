@@ -5,7 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <?php require 'inc/links.php'; ?>
+    <?php require '../inc/links.php'; ?>
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <title><?php echo $site_r['site_title'] ?> - Confirm Booking</title>
     <style>
         .pop:hover {
@@ -14,18 +19,16 @@
             transition: all 0.3s;
         }
 
-        .booked {
+        .booked-date a {
             background-color: red !important;
             color: white !important;
-            pointer-events: none;
-            /* Prevent selection */
         }
     </style>
 </head>
 
 <body class="bg-light">
 
-    <?php require 'inc/header.php'; ?>
+    <?php require '../inc/header.php'; ?>
 
     <?php
 
@@ -121,16 +124,16 @@
             <div class="col-lg-5 col-md-12 px-4">
                 <div class="card mb-4 border-0 shadow rounded-3">
                     <div class="card-body">
-                        <form action="pay_now.php" id="booking_form" method="POST">
+                        <form action="book_now.php" id="booking_form" method="POST">
                             <h6 class="mb-3">Booking Details</h6>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Name</label>
-                                    <input name="name" type="text" value="<?php echo $user_data['name'] ?>" class="form-control shadown-none" required>
+                                    <input name="name" type="text" value="<?php echo $user_data['name'] ?>" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Phone Number</label>
-                                    <input name="phoneNumber" type="number" value="<?php echo $user_data['phoneNumber'] ?>" class="form-control shadown-none" required>
+                                    <input name="phoneNumber" type="number" value="<?php echo $user_data['phoneNumber'] ?>" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label class="form-label">Address</label>
@@ -138,26 +141,23 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Check-in</label>
-                                    <input name="checkin" id="checkin" onchange="check_availability()" type="date" class="form-control shadown-none" required>
+                                    <input name="checkin" id="checkin" onchange="check_availability()" type="date" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label">Check-out</label>
-                                    <input name="checkout" id="checkout" onchange="check_availability()" type="date" class="form-control shadown-none" required>
+                                    <input name="checkout" id="checkout" onchange="check_availability()" type="date" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-12">
                                     <div class="spinner-border text-info mb-3 d-none" id="info_loader" role="status">
                                         <span class="visually-hidden">Loading...</span>
                                     </div>
                                     <h6 class="mb-3 text-danger" id="pay_info">Provide check-in & check-out date!</h6>
-                                    <button name="pay_now" class="btn w-100 text-white custom-bg shadow-none mb-1" disabled>Pay Now</button>
+                                    <button name="book_now" class="btn w-100 text-white custom-bg shadow-none mb-1" disabled>Book Now</button>
                                 </div>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -166,30 +166,57 @@
 
 
 
-    <?php require 'inc/footer.php'; ?>
+    <?php require '../inc/footer.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
 
-    <!-- <script>
-        function fetchBookedDates() {
-            let formData = new FormData();
-            formData.append("fetch_booked_dates", true);
 
-            fetch("fetch_booked_dates.php", {
-                    method: "POST",
-                    body: formData
-                })
+    <!-- Calendar logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("../ajax/get_booked_dates.php")
                 .then(response => response.json())
-                .then(data => {
-                    console.log("Booked Dates Response:", data); // Debugging output
+                .then(bookedDates => {
+                    console.log("Booked Dates:", bookedDates); // Debugging
 
-                    if (data.status === "success") {
-                        initializeFlatpickr(data.booked_dates);
-                    } else {
-                        console.error("Error: Invalid response format");
+                    function highlightBookedDates(date) {
+                        return bookedDates.includes(date.toISOString().split('T')[0]);
                     }
+
+                    flatpickr("#checkin", {
+                        dateFormat: "Y-m-d",
+                        disable: bookedDates, // Disable booked dates
+                        onDayCreate: function(dObj, dStr, fp, dayElem) {
+                            let dateStr = dayElem.dateObj.toISOString().split('T')[0];
+                            if (bookedDates.includes(dateStr)) {
+                                dayElem.style.backgroundColor = "#ffcccc"; // Light red for booked dates
+                                dayElem.style.borderRadius = "5px";
+                            }
+                        },
+                        onChange: function(selectedDates, dateStr) {
+                            let checkoutPicker = document.getElementById("checkout")._flatpickr;
+                            checkoutPicker.set("minDate", dateStr); // Ensure checkout is after checkin
+                        }
+                    });
+
+                    flatpickr("#checkout", {
+                        dateFormat: "Y-m-d",
+                        disable: bookedDates,
+                        onDayCreate: function(dObj, dStr, fp, dayElem) {
+                            let dateStr = dayElem.dateObj.toISOString().split('T')[0];
+                            if (bookedDates.includes(dateStr)) {
+                                dayElem.style.backgroundColor = "#ffcccc";
+                                dayElem.style.borderRadius = "5px";
+                            }
+                        }
+                    });
                 })
                 .catch(error => console.error("Error fetching booked dates:", error));
-        }
-    </script> -->
+        });
+    </script>
+
+
 
     <script>
         let booking_form = document.getElementById('booking_form');
@@ -200,7 +227,7 @@
             let checkin_value = booking_form.elements['checkin'].value;
             let checkout_value = booking_form.elements['checkout'].value;
 
-            booking_form.elements['pay_now'].setAttribute('disabled', true);
+            booking_form.elements['book_now'].setAttribute('disabled', true);
 
             if (checkin_value != '' && checkout_value != '') {
 
@@ -215,7 +242,7 @@
                 data.append('checkout', checkout_value);
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "ajax/confirm_booking.php", true);
+                xhr.open("POST", "../ajax/confirm_booking.php", true);
 
                 xhr.onload = function() {
 
@@ -232,7 +259,7 @@
                     } else {
                         pay_info.innerHTML = "No. of Days: " + data.days + "<br>Total Amount to pay: ₱" + data.payment;
                         pay_info.classList.replace('text-danger', 'text-dark');
-                        booking_form.elements['pay_now'].removeAttribute('disabled');
+                        booking_form.elements['book_now'].removeAttribute('disabled');
                     }
 
                     pay_info.classList.remove('d-none');
@@ -245,7 +272,6 @@
             }
         }
     </script>
-
 
 </body>
 

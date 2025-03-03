@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <?php require('inc/links.php'); ?>
+    <?php require('../inc/links.php'); ?>
     <title><?php echo $site_r['site_title'] ?> - Home</title>
     <style>
         .availability-form {
@@ -28,7 +28,7 @@
 
 <body>
 
-    <?php require('inc/header.php'); ?>
+    <?php require('../inc/header.php'); ?>
 
     <!-- Index Carousel -->
     <div class="container-fluid px-lg-4 mt-4">
@@ -409,7 +409,7 @@
     </div>
 
 
-    <?php require('inc/footer.php'); ?>
+    <?php require('../inc/footer.php'); ?>
 
     <?php
     if (isset($_GET['account_recovery'])) {
@@ -525,7 +525,7 @@
 
 
             let xhr = new XMLHttpRequest();
-            xhr.open("POST", "ajax/login_register.php", true);
+            xhr.open("POST", "public/ajax/login_register.php", true);
 
 
             xhr.onload = function() {

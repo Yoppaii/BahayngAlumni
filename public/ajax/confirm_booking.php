@@ -1,7 +1,8 @@
 <?php
+define('ROOT_DIR', 'E:/xampp/htdocs/RoomReservation/');
 
-require '../admin/inc/db_config.php';
-require '../admin/inc/essentials.php';
+require ROOT_DIR . 'admin/inc/db_config.php';
+require ROOT_DIR . 'admin/inc/essentials.php';
 require '../inc/sendgrid/sendgrid-php.php';
 
 date_default_timezone_set("Asia/Manila");
@@ -66,30 +67,3 @@ if (isset($_POST['check_availability'])) {
         echo $result;
     }
 }
-
-
-// if (isset($_POST['fetch_booked_dates'])) {
-//     session_start();
-
-//     $room_id = $_SESSION['room']['id']; // Get the room ID from the session
-//     $bookedDates = [];
-
-//     // Query to get all check-in and check-out dates for the room
-//     $query = "SELECT check_in, check_out FROM booking_order WHERE booking_status = ? AND room_id = ?";
-//     $values = ['booked', $room_id];
-//     $result = select($query, $values, 'si');
-
-//     // Generate all booked dates
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         $checkIn = new DateTime($row['check_in']);
-//         $checkOut = new DateTime($row['check_out']);
-
-//         while ($checkIn <= $checkOut) {
-//             $bookedDates[] = $checkIn->format("Y-m-d");
-//             $checkIn->modify("+1 day");
-//         }
-//     }
-
-//     $result = json_encode(["status" => "success", "booked_dates" => $bookedDates]);
-//     echo $result;
-// }

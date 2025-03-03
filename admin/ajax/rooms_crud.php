@@ -18,7 +18,7 @@ if (isset($_POST['add_room'])) {
     $query1 = "INSERT INTO rooms( name, area, price, quantity, capacity, description) VALUES (?, ?, ?, ?, ?, ?)";
     $values = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['quantity'], $frm_data['capacity'], $frm_data['description']];
 
-    if (insert($query1, $values, 'siiiiis')) {
+    if (insert($query1, $values, 'siiiis')) {
         $flag = 1;
     }
 

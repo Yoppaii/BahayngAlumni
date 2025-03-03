@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <?php require 'inc/links.php'; ?>
+    <?php require '../inc/links.php'; ?>
     <title><?php echo $site_r['site_title'] ?> - Bookings</title>
     <style>
         .pop:hover {
@@ -18,7 +18,7 @@
 
 <body class="bg-light">
 
-    <?php require 'inc/header.php';
+    <?php require '../inc/header.php';
 
     if (!(isset($_SESSION['login']) && $_SESSION['login'] == true)) {
         redirect('index.php');
@@ -41,60 +41,84 @@
 
             <?php
             $query = "SELECT bo.*, bd.* FROM booking_order bo
-                INNER JOIN booking_details bd ON bo.booking_id = bd.booking_id
-                WHERE ((bo.booking_status = 'booked')
-                OR (bo.booking_status = 'cancelled')
-                OR (bo.booking_status = 'pending'))
-                AND (bo.user_id = ?)
-                ORDER BY bo.booking_id DESC";
+            INNER JOIN booking_details bd ON bo.booking_id = bd.booking_id
+            WHERE ((bo.booking_status = 'booked')
+            OR (bo.booking_status = 'cancelled'))
+            AND (bo.user_id = ?)
+            ORDER BY bo.booking_id DESC";
 
             $result = select($query, [$_SESSION['userId']], 'i');
 
             while ($data = mysqli_fetch_assoc($result)) {
-                $date = date("d-m-Y", strtotime($data['dateandtime']));
-                $checkin = date("d-m-Y", strtotime($data['check_in']));
-                $checkout = date("d-m-Y", strtotime($data['check_out']));
+                $checkin = new DateTime($data['check_in']);
+                $checkout = new DateTime($data['check_out']);
+                $created_date = new DateTime($data['dateandtime']); // Creation date
+                $current_time = new DateTime(); // Current time
+
+                // Calculate the deadline (24 hours after creation)
+                $deadline = clone $created_date;
+                $deadline->modify('+24 hours');
+
+                // Get remaining time in seconds
+                $remaining_time = $deadline->getTimestamp() - $current_time->getTimestamp();
 
                 $status_bg = "";
                 $btn = "";
 
-                if ($data['booking_status'] == 'pending') {
-                    $status_bg = "bg-warning";
-
-                    $btn = "<button onclick='cancel_booking($data[booking_id])' type='button' class='btn btn-danger btn-sm shadow-none'>Cancel</button>";
-                } else if ($data['booking_status'] == 'booked') {
+                if ($data['booking_status'] == 'booked') {
                     $status_bg = "bg-success";
 
                     if ($data['arrival'] == 1) {
+                        // User has checked in
                         $btn = "<a href='generate_pdf.php?gen_pdf&id=$data[booking_id]' class='btn btn-dark btn-sm fw-bold shadow-none me-1'>Download PDF</a>";
+
                         if ($data['rate_review'] == 0) {
-                            $btn .= "<button type='button' onclick='review_room($data[booking_id],$data[room_id])' data-bs-toggle='modal' data-bs-target='#reviewModal' class=' btn btn-dark btn-sm shadow-none'>Rate & Review</button>";
+                            $btn .= "<button type='button' onclick='review_room($data[booking_id],$data[room_id])' data-bs-toggle='modal' data-bs-target='#reviewModal' class='btn btn-dark btn-sm shadow-none'>Rate & Review</button>";
                         }
                     } else {
-                        $btn = "<button onclick='cancel_booking($data[booking_id])' type='button' class='btn btn-danger btn-sm shadow-none'>Cancel</button>";
+                        // Check if the 24-hour deadline has passed
+                        if ($remaining_time <= 0) {
+                            $btn .= "<span class='text-danger fw-bold'>No-Show</span>";
+                            $status_bg = "bg-secondary";
+                        } else {
+                            // Convert remaining time into hours and minutes
+                            $remaining_time_hours = floor($remaining_time / 3600);
+                            $remaining_time_minutes = floor(($remaining_time % 3600) / 60);
+
+                            // echo "Current time: " . $current_time->format("d-m-Y h:i A") . "<br>";
+                            // echo "Deadline time: " . $deadline->format("d-m-Y h:i A") . "<br>";
+
+                            $btn .= "<button id='cancel_btn_$data[booking_id]' onclick='cancel_booking($data[booking_id])' type='button' class='btn btn-danger btn-sm shadow-none' ";
+
+                            if ($remaining_time <= 0) {
+                                $btn .= "disabled>Cannot Cancel</button>";
+                            } else {
+                                $btn .= ">Cancel ($remaining_time_hours hrs $remaining_time_minutes mins left)</button>";
+                            }
+                        }
                     }
                 } else if ($data['booking_status'] == 'cancelled') {
                     $status_bg = "bg-danger";
-                    $btn = "<a href='generate_pdf.php?gen_pdf&id=$data[booking_id]' class='btn btn-dark btn-sm fw-bold shadow-none'>Download PDF</a>";
-                    // Refund if theres a payment
+                    $btn = "<span class='text-light fw-bold'>Cancelled</span>";
                 } else {
                     $status_bg = "bg-warning";
                     $btn = "<button type='button' class='btn btn-dark btn-sm shadow-none'>Rate & Review</button>";
                 }
 
+
+
                 echo <<<bookings
                     <div class='col-md-4 px-4 mb-4'>
-                        <div class='bg-whote p-3 rounded shadow-sm'>
+                        <div class='bg-white p-3 rounded shadow-sm'>
                             <h5 class='fw-bold'>$data[room_name]</h5>
                             <p>$data[price] per night</p>
                             <p>
-                                <b>Check-in: </b>$checkin <br>
-                                <b>Check-out: </b>$checkout
+                                <b>Check-in: <br></b> {$checkin->format('d F Y - h:i A')}<br>
+                                <b>Check-out: <br></b> {$checkout->format('d F Y - h:i A')}
                             </p>
                             <p>
                                 <b>Amount: </b>₱$data[price] <br>
                                 <b>Order ID: </b>$data[order_id]<br>
-                                <b>Date: </b>$date
                             </p>
                             <p>
                                 <span class='badge $status_bg'>$data[booking_status]</span>
@@ -104,8 +128,9 @@
                     </div>
                 bookings;
             }
-
             ?>
+
+
 
         </div>
     </div>
@@ -160,13 +185,13 @@
     }
     ?>
 
-    <?php require 'inc/footer.php'; ?>
+    <?php require '../inc/footer.php'; ?>
 
     <script>
         function cancel_booking(id) {
             if (confirm("Are you sure you want to cancel this booking?")) {
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "ajax/cancel_booking.php", true);
+                xhr.open("POST", "/RoomReservation/public/ajax/cancel_booking.php", true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
                 xhr.onload = function() {
@@ -200,7 +225,7 @@
             data.append('room_id', review_form.elements['room_id'].value);
 
             let xhr = new XMLHttpRequest();
-            xhr.open("POST", "ajax/review_room.php", true);
+            xhr.open("POST", "/RoomReservation/public/ajax/review_room.php", true);
 
             xhr.onload = function() {
                 if (this.responseText == 1) {
@@ -221,8 +246,26 @@
 
             xhr.send(data);
         });
-    </script>
 
+        // function updateCancelCountdown(bookingId, remainingHours) {
+        //     let btn = document.getElementById(`cancel_btn_${bookingId}`);
+        //     if (!btn) return;
+
+        //     let interval = setInterval(() => {
+        //         remainingHours--;
+        //         if (remainingHours <= 0) {
+        //             btn.innerText = "Cannot Cancel";
+        //             btn.disabled = true;
+        //             clearInterval(interval);
+        //         } else {
+        //             btn.innerText = `Cancel (${remainingHours} hrs left)`;
+        //         }
+        //     }, 3600000); // Update every hour
+        // }
+
+        // // Call this function when loading the page with real values
+        // updateCancelCountdown(booking_id, remaining_time);
+    </script>
 </body>
 
 </html>

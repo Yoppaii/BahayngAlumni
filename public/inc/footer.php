@@ -151,7 +151,7 @@
         modal.hide();
 
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "ajax/login_register.php", true);
+        xhr.open("POST", "/RoomReservation/public/ajax/login_register.php", true);
 
 
         xhr.onload = function() {
@@ -195,7 +195,7 @@
         modal.hide();
 
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "ajax/login_register.php", true);
+        xhr.open("POST", "/RoomReservation/public/ajax/login_register.php", true);
 
 
         xhr.onload = function() {

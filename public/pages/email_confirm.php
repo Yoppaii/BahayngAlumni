@@ -1,7 +1,7 @@
 <?php
 
-require 'admin/inc/db_config.php';
-require 'admin/inc/essentials.php';
+require __DIR__ . '/../../admin/inc/db_config.php';
+require __DIR__ . '/../../admin/inc/essentials.php';
 
 if (isset($_GET['email_confirmation'])) {
 
